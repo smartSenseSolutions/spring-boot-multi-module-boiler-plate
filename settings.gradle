@@ -1,0 +1,23 @@
+rootProject.name = 'ss-multi-module'
+
+FileTree buildFiles = fileTree(rootDir) {
+    include 'ss-web'
+    exclude 'build', '**/gradle', 'settings.gradle', 'buildSrc', '/build.gradle', '.*', 'out'
+}
+
+buildFiles.each { File buildFile ->
+    String projectName = buildFile.name.replace('.gradle', '');
+    String projectPath = ':' + projectName;
+    include projectPath
+    def project = findProject("${projectPath}")
+    project.name = projectName
+    project.projectDir = buildFile.parentFile
+    project.buildFileName = buildFile.name
+}
+
+include 'ss-web'
+include 'ss-api'
+include 'ss-dao'
+include 'ss-service'
+include 'ss-service-impl'
+

@@ -1,0 +1,72 @@
+/*
+ * Copyright (c) 2024-25 Smart Sense Consulting Solutions Pvt. Ltd.
+ */
+package ss.mod.demo.web.config.security;
+
+import jakarta.validation.constraints.NotNull;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.security.authentication.AbstractAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
+import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
+import ss.mod.demo.api.constant.ContField;
+import ss.mod.demo.api.constant.ContValue;
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+
+/**
+ * CustomAuthenticationConverter is used to extract the role information from the JWT token.
+ * This will use when security configuration is enabled in the application.
+ *
+ * @author Sunil Kanzar
+ * @since 14th feb 2024
+ */
+public class CustomAuthenticationConverter implements Converter<Jwt, AbstractAuthenticationToken> {
+
+    private final JwtGrantedAuthoritiesConverter grantedAuthoritiesConverter;
+    private final String resourceId;
+
+    CustomAuthenticationConverter(String resourceId) {
+        this.resourceId = resourceId;
+        grantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
+    }
+
+    /**
+     * Method used for extracting the scope of the jwt token and manage the authority details.
+     *
+     * @param source - Indicates the Jwt
+     * @return {@link AbstractAuthenticationToken}
+     */
+    @Override
+    public AbstractAuthenticationToken convert(@NotNull Jwt source) {
+        Collection<GrantedAuthority> authorities = new HashSet<>((grantedAuthoritiesConverter.convert(source)));
+        authorities.addAll(extractResourceRoles(source, resourceId));
+        return new JwtAuthenticationToken(source, authorities);
+    }
+
+    /**
+     * Extract the roles from resource_access from the JWT token.
+     *
+     * @param jwt        - Indicates the JWT token
+     * @param resourceId - Indicates the clientId which used by the resource server.
+     * @return Collection Of {@link GrantedAuthority}
+     */
+    private Collection<? extends GrantedAuthority> extractResourceRoles(Jwt jwt, String resourceId) {
+        Map<String, Object> resourceAccess = jwt.getClaim(ContField.CLAIM_RESOURCE_ACCESS);
+        Map<String, Object> resource = (Map<String, Object>) resourceAccess.get(resourceId);
+        if (Objects.isNull(resource)) {
+            return Set.of();
+        }
+        Collection<String> resourceRoles = (Collection<String>) resource.get(ContField.CLAIM_ROLES);
+        if (Objects.isNull(resourceRoles)) {
+            return Set.of();
+        }
+        return resourceRoles.stream()
+                .map(role -> new SimpleGrantedAuthority(ContValue.SPRING_ROLE_PREFIX + role))
+                .collect(Collectors.toSet());
+    }
+}
