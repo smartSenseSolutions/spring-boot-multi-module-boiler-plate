@@ -14,10 +14,12 @@ import ss.mod.demo.api.constant.ContMessage;
 import ss.mod.demo.api.constant.ContURI;
 import ss.mod.demo.api.model.request.FilterWrapper;
 import ss.mod.demo.api.model.request.UserRequest;
-import ss.mod.demo.api.model.response.BodyResponse;
 import ss.mod.demo.api.model.response.PageResponse;
+import ss.mod.demo.api.model.response.ResponseBody;
 import ss.mod.demo.api.model.response.UserResponse;
 import ss.mod.demo.service.UserManagementService;
+import ss.mod.demo.web.UserManagementResourceApiDocs.Common500;
+import ss.mod.demo.web.UserManagementResourceApiDocs.CreateUserApiDocs;
 
 /**
  * Provide endpoint related to User management
@@ -28,14 +30,15 @@ import ss.mod.demo.service.UserManagementService;
 @AllArgsConstructor
 @RestController
 @Slf4j
+@Common500
 public class UserManagementResource extends BaseResource {
     private final UserManagementService userManagementService;
 
-    @Operation(summary = "Create User")
+    @CreateUserApiDocs
     @PostMapping(value = ContURI.USER, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public BodyResponse<UserResponse> createUser(@Valid @RequestBody UserRequest userRequest) {
+    public ResponseBody<UserResponse> createUser(@Valid @RequestBody UserRequest userRequest) {
         UserResponse user = userManagementService.createUser(userRequest);
-        return BodyResponse.of(resolveMessage(ContMessage.USER_CREATED), user);
+        return ResponseBody.of(resolveMessage(ContMessage.USER_CREATED), user);
     }
 
     @Operation(summary = "Get User")

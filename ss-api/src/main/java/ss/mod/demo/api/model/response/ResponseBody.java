@@ -21,14 +21,14 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Getter
 @Setter
-public class BodyResponse<T> implements Serializable {
+public class ResponseBody<T> implements Serializable {
     @Serial
     private static final long serialVersionUID = 7137695452659404087L;
 
     private String message;
     private T body;
 
-    public static <T> BodyResponse<T> of(String message, T body) {
-        return new BodyResponse<>(message, body);
+    public static <T> ResponseBody<T> of(String message, T body) {
+        return new ResponseBody<>(message, body);
     }
 }

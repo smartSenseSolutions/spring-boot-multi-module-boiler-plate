@@ -7,20 +7,22 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.ProblemDetail;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import ss.mod.demo.api.constant.ContMessage;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import ss.mod.demo.api.constant.ContField;
 import ss.mod.demo.api.exception.BadDataException;
-import ss.mod.demo.api.exception.ErrorObject;
 import ss.mod.demo.service.entity.BaseService;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * Global exception handler
@@ -32,57 +34,115 @@ import java.util.stream.Collectors;
 @Slf4j
 @AllArgsConstructor
 public class GlobalExceptionHandler extends BaseService {
-    @ExceptionHandler({MethodArgumentNotValidException.class})
-    public ResponseEntity<ErrorObject> validatorExceptionHandle(MethodArgumentNotValidException ex) {
-        Map<String, List<String>> errors = ex.getBindingResult()
-                .getFieldErrors()
-                .stream()
-                .collect(Collectors.groupingBy(FieldError::getField, Collectors.mapping(FieldError::getDefaultMessage, Collectors.toList())));
-        return new ResponseEntity<>(
-                ErrorObject.builder()
-                        .message(resolveMessage(ex.getBody().getDetail()))
-                        .errorParams(errors)
-                        .code("400-1")
-                        .status(HttpStatus.BAD_REQUEST.value())
-                        .build(),
-                HttpStatus.BAD_REQUEST);
+
+    /**
+     * Handle validation problem detail.
+     *
+     * @param e the e
+     * @return the problem detail
+     */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    ProblemDetail handleValidation(MethodArgumentNotValidException e) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ExceptionUtils.getMessage(e));
+        problemDetail.setTitle("Invalid data provided");
+        problemDetail.setProperty(ContField.TIMESTAMP, System.currentTimeMillis());
+        problemDetail.setProperty(ContField.ERRORS, handleValidationError(e.getFieldErrors()));
+        return problemDetail;
     }
 
-    @ExceptionHandler({ConstraintViolationException.class})
-    public ResponseEntity<ErrorObject> validatorExceptionHandle(ConstraintViolationException ex) {
-        Map<String, List<String>> errors = ex.getConstraintViolations()
-                .stream()
-                .collect(Collectors.groupingBy(c -> c.getPropertyPath().toString(), Collectors.mapping(ConstraintViolation::getMessage, Collectors.toList())));
-
-        return new ResponseEntity<>(
-                ErrorObject.builder()
-                        .message(ex.getMessage())
-                        .errorParams(errors)
-                        .code("400-2")
-                        .status(HttpStatus.BAD_REQUEST.value())
-                        .build(),
-                HttpStatus.BAD_REQUEST);
+    /**
+     * Handle validation problem detail.
+     *
+     * @param exception the exception
+     * @return the problem detail
+     */
+    @ExceptionHandler(ConstraintViolationException.class)
+    ProblemDetail handleValidation(ConstraintViolationException exception) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ExceptionUtils.getMessage(exception));
+        problemDetail.setTitle("Invalid data provided");
+        problemDetail.setProperty(ContField.TIMESTAMP, System.currentTimeMillis());
+        problemDetail.setProperty(ContField.ERRORS, exception.getConstraintViolations().stream().map(ConstraintViolation::getMessage).toList());
+        return problemDetail;
     }
 
-    @ExceptionHandler({BadDataException.class})
-    public ResponseEntity<ErrorObject> badDataExceptionHandle(BadDataException ex) {
-        return new ResponseEntity<>(
-                ErrorObject.builder()
-                        .message(resolveMessage(ex.getMessage()))
-                        .code(ex.getCode() != null ? ex.getCode() : "400-3")
-                        .status(HttpStatus.BAD_REQUEST.value())
-                        .build(),
-                HttpStatus.BAD_REQUEST);
+    /**
+     * Handle bad data exception problem detail.
+     *
+     * @param e the e
+     * @return the problem detail
+     */
+    @ExceptionHandler(BadDataException.class)
+    ProblemDetail handleBadDataException(BadDataException e) {
+        String errorMsg = ExceptionUtils.getMessage(e);
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, errorMsg);
+        problemDetail.setTitle(errorMsg);
+        problemDetail.setProperty(ContField.TIMESTAMP, System.currentTimeMillis());
+        return problemDetail;
     }
 
-    @ExceptionHandler({Exception.class})
-    public ResponseEntity<ErrorObject> globalHandler(Exception ex) {
-        log.error(ex.getMessage(), ex);
-        return new ResponseEntity<>(
-                ErrorObject.builder()
-                        .message(resolveMessage(ContMessage.SOMETHING_WENT_WRONG))
-                        .code("500-1")
-                        .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                        .build(), HttpStatus.INTERNAL_SERVER_ERROR);
+    /**
+     * Handle property reference exception problem detail.
+     *
+     * @param exception the exception
+     * @return the problem detail
+     */
+    @ExceptionHandler(PropertyReferenceException.class)
+    ProblemDetail handlePropertyReferenceException(PropertyReferenceException exception) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ExceptionUtils.getMessage(exception));
+        problemDetail.setTitle(ExceptionUtils.getMessage(exception));
+        problemDetail.setProperty(ContField.TIMESTAMP, System.currentTimeMillis());
+        problemDetail.setProperty(ContField.PROPERTY, exception.getPropertyName());
+        return problemDetail;
+    }
+
+    /**
+     * Handle method argument type mismatch exception problem detail.
+     *
+     * @param exception the exception
+     * @return the problem detail
+     */
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    ProblemDetail handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException exception) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ExceptionUtils.getMessage(exception));
+        problemDetail.setTitle(ExceptionUtils.getMessage(exception));
+        problemDetail.setProperty(ContField.TIMESTAMP, System.currentTimeMillis());
+        problemDetail.setProperty(ContField.ARGUMENT, exception.getName());
+        return problemDetail;
+    }
+
+    /**
+     * Handle illegal argument exception problem detail.
+     *
+     * @param exception the exception
+     * @return the problem detail
+     */
+    @ExceptionHandler(IllegalArgumentException.class)
+    ProblemDetail handleIllegalArgumentException(IllegalArgumentException exception) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ExceptionUtils.getMessage(exception));
+        problemDetail.setTitle(ExceptionUtils.getMessage(exception));
+        problemDetail.setProperty(ContField.TIMESTAMP, System.currentTimeMillis());
+        return problemDetail;
+    }
+
+    /**
+     * Handle exception problem detail.
+     *
+     * @param e the e
+     * @return the problem detail
+     */
+    @ExceptionHandler(Exception.class)
+    ProblemDetail handleException(Exception e) {
+        log.error("Error ", e);
+        ProblemDetail problemDetail;
+        problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, ExceptionUtils.getMessage(e));
+        problemDetail.setTitle(ExceptionUtils.getMessage(e));
+        problemDetail.setProperty(ContField.TIMESTAMP, System.currentTimeMillis());
+        return problemDetail;
+    }
+
+    private Map<String, String> handleValidationError(List<FieldError> fieldErrors) {
+        Map<String, String> messages = new HashMap<>();
+        fieldErrors.forEach(fieldError -> messages.put(fieldError.getField(), fieldError.getDefaultMessage()));
+        return messages;
     }
 }

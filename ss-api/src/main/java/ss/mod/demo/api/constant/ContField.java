@@ -15,4 +15,8 @@ public class ContField {
     public static final String CLAIMS = "claims";
     public static final String CLAIM_RESOURCE_ACCESS = "resource_access";
     public static final String CLAIM_ROLES = "roles";
+    public static final String TIMESTAMP = "timestamp";
+    public static final String ERRORS = "errors";
+    public static final String PROPERTY = "property";
+    public static final String ARGUMENT = "argument";
 }
