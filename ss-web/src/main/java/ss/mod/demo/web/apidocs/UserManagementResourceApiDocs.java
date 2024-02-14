@@ -1,4 +1,4 @@
-package ss.mod.demo.web;
+package ss.mod.demo.web.apidocs;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

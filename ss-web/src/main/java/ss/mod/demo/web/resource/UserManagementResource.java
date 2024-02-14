@@ -18,8 +18,8 @@ import ss.mod.demo.api.model.response.PageResponse;
 import ss.mod.demo.api.model.response.ResponseBody;
 import ss.mod.demo.api.model.response.UserResponse;
 import ss.mod.demo.service.UserManagementService;
-import ss.mod.demo.web.UserManagementResourceApiDocs.Common500;
-import ss.mod.demo.web.UserManagementResourceApiDocs.CreateUserApiDocs;
+import ss.mod.demo.web.apidocs.UserManagementResourceApiDocs.Common500;
+import ss.mod.demo.web.apidocs.UserManagementResourceApiDocs.CreateUserApiDocs;
 
 /**
  * Provide endpoint related to User management
