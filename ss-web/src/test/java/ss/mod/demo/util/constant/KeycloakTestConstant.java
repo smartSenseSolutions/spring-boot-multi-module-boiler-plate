@@ -1,6 +1,10 @@
 package ss.mod.demo.util.constant;
 
-public class KeycloakTestConstant {
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class KeycloakTestConstant {
     public static final String BEARER = "Bearer ";
     public static final String REAL_FILE_PATH = "app-test-realm.json";
     public static final String KEYCLOAK_ADMIN_USERNAME = "admin";
