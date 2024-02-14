@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.domain.AuditorAware;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -24,7 +23,6 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import ss.mod.demo.api.constant.ContURI;
 import ss.mod.demo.api.constant.ContValue;
-import ss.mod.demo.service.entity.AuditorAwareImpl;
 
 import java.util.List;
 
@@ -63,8 +61,8 @@ public class AuthenticationConfig {
                     auth.requestMatchers(new AntPathRequestMatcher(ContURI.CONTEXT_SWAGGER_IU_ALL)).permitAll();
                     auth.requestMatchers(new AntPathRequestMatcher(ContURI.CONTEXT_HEALTH_ALL)).permitAll();
                     auth.requestMatchers(new AntPathRequestMatcher(ContURI.CONTEXT_PRIVATE_ALL)).permitAll();
-                    auth.requestMatchers(new AntPathRequestMatcher(ContURI.CONTEXT_AUTHENTICATED_ALL)).hasRole("<UserRole>");
-                    auth.requestMatchers(new AntPathRequestMatcher(ContURI.CONTEXT_AUTHENTICATED_WITH_NO_FILTER_ALL)).hasRole("<UserRole>");
+                    auth.requestMatchers(new AntPathRequestMatcher(ContURI.CONTEXT_AUTHENTICATED_ALL)).hasRole("SWD_ADMIN");
+                    auth.requestMatchers(new AntPathRequestMatcher(ContURI.CONTEXT_AUTHENTICATED_WITH_NO_FILTER_ALL)).hasRole("SWD_ADMIN");
                 }).oauth2ResourceServer(oath -> oath.jwt(jwt -> jwt.jwtAuthenticationConverter(new CustomAuthenticationConverter(configProperties.roleClientId()))));
         return http.build();
     }
@@ -78,7 +76,7 @@ public class AuthenticationConfig {
      */
     @Bean
     @ConditionalOnProperty(value = "app.security.enabled", havingValue = "false")
-    public WebSecurityCustomizer securityCustomizer() {
+    public static WebSecurityCustomizer securityCustomizer() {
         AuthenticationConfig.log.warn("Disable security : This is not recommended to use in production environments.");
         return web -> web.ignoring().requestMatchers(new AntPathRequestMatcher("**"));
     }
