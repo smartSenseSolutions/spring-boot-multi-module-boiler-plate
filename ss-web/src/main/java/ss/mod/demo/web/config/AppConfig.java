@@ -15,6 +15,8 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.data.domain.AuditorAware;
+import ss.mod.demo.service.entity.AuditorAwareImpl;
 import ss.mod.demo.web.config.feign.FeignProperties;
 import ss.mod.demo.web.config.feign.retry.FeignRetryer;
 
@@ -80,5 +82,15 @@ public class AppConfig {
     @Bean
     public ExecutorService getExecutorService() {
         return Executors.newFixedThreadPool(5);
+    }
+
+    /**
+     * This bean will responsible to maintain auditing field on entity
+     *
+     * @return {@link AuditorAware}
+     */
+    @Bean
+    public AuditorAware<String> auditorAware() {
+        return new AuditorAwareImpl();
     }
 }

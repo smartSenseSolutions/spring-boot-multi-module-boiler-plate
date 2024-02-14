@@ -99,14 +99,5 @@ public class AuthenticationConfig {
         return source;
     }
 
-    /**
-     * This bean will responsible to maintain auditing field on entity
-     *
-     * @return {@link AuditorAware}
-     */
-    @Bean
-    public AuditorAware<String> auditorAware() {
-        return new AuditorAwareImpl();
-    }
 }
 
