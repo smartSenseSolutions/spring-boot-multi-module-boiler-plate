@@ -2,19 +2,38 @@ app:
   name: Multi-module Demo
   description: Seed multi-module project
   version: 1
+  port: ${APP_PORT:8080}
   security:
-    enabled: ${SECURITY_ENABLE:false}
-    realm: ${KEYCLOAK_REALM_NAME:master}
-    clientId: ${KEYCLOAK_CLIENT_ID:swd_public_client}
-    roleClientId: ${KEYCLOAK_ROLE_CLIENT_ID:swd_public_client}
-    auth-server-url: ${KEYCLOAK_AUTH_URL:https://auth.dev.smart-x.smartsenselabs.com}
+    enabled: ${SECURITY_ENABLE:true}
+    realm: ${KEYCLOAK_REALM_NAME:SWD}
+    clientId: ${KEYCLOAK_CLIENT_ID:pb_backend}
+    roleClientId: ${KEYCLOAK_ROLE_CLIENT_ID:pv_backend}
+    auth-server-url: ${KEYCLOAK_AUTH_URL:http://localhost:9090/auth}
     auth-url: ${app.security.auth-server-url}/realms/${app.security.realm}/protocol/openid-connect/auth
     token-url: ${app.security.auth-server-url}/realms/${app.security.realm}/protocol/openid-connect/token
     refresh-token-url: ${KEYCLOAK_TOKEN_URL}
     corsOrigins: "*"
+  database:
+    host: ${DB_HOST:localhost}
+    port: ${DB_PORT:5432}
+    name: ${DB_NAME:multi-module-demo}
+    username: ${DB_USER:root}
+    password: ${DB_PASSWORD:root}
+  swagger:
+    clientId: ${KEYCLOAK_CLIENT_ID:swd_public_client}
+  multipart:
+    maxFileSize: ${MULTIPART_MAX_FILE_SIZE:50MB}
+    maxRequestSize: ${MULTIPART_MAX_REQUEST_SIZE:51MB}
+  retry:
+    connectionTimeoutMillis: ${RETRY_CONNECTION_TIMEOUT_MILLI:200}
+    readTimeoutMillis: ${RETRY_READ_TIMEOUT_MILLI:500}
+    maxIdleConnections: ${RETRY_MAX_IDLE_CONNECTION:10}
+    keepAliveDurationMinutes: ${RETRY_ALIVE_DURATION_MIN:5}
+    maxRetryAttempt: ${RETRY_MAX_ATTEMPT:5}
+    retryInterval: ${RETRY_INTERVAL_MILLI:2000}
 
 server:
-  port: ${APP_PORT:8080}
+  port: ${app.port}
   shutdown: graceful
   servlet:
     contextPath: /api/app
@@ -26,7 +45,7 @@ server:
 springdoc:
   swagger-ui:
     oauth:
-      clientId: ${KEYCLOAK_CLIENT_ID:swd_public_client}
+      clientId: ${app.swagger.clientId}
     disable-swagger-default-url: true
     path: /ui/swagger-ui
     show-common-extensions: true
@@ -73,9 +92,9 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: false
   datasource:
-    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:multi-module-demo}
-    username: ${DB_USER:admin}
-    password: ${DB_PASSWORD:admin}
+    url: jdbc:postgresql://${app.database.host}:${app.database.port}/${app.database.name}
+    username: ${app.database.username}
+    password: ${app.database.password}
     driverClassName: org.postgresql.Driver
   security:
     oauth2:
@@ -86,16 +105,16 @@ spring:
           jwk-set-uri: ${app.security.auth-server-url}/realms/${app.security.realm}/protocol/openid-connect/certs
   servlet:
     multipart:
-      max-file-size: ${MULTIPART_MAX_FILE_SIZE:50MB}
-      max-request-size: ${MULTIPART_MAX_REQUEST_SIZE:51MB}
+      max-file-size: ${app.multipart.maxFileSize}
+      max-request-size: ${app.multipart.maxRequestSize}
   liquibase:
     change-log: classpath:/db/changelog/changelog-master.xml
 
 feign:
   default:
-    connectionTimeoutMillis: ${RETRY_CONNECTION_TIMEOUT_MILLI:200}
-    readTimeoutMillis: ${RETRY_READ_TIMEOUT_MILLI:500}
-    maxIdleConnections: ${RETRY_MAX_IDLE_CONNECTION:10}
-    keepAliveDurationMinutes: ${RETRY_ALIVE_DURATION_MIN:5}
-    maxRetryAttempt: ${RETRY_MAX_ATTEMPT:5}
-    retryInterval: ${RETRY_INTERVAL_MILLI:2000}
+    connectionTimeoutMillis: ${app.retry.connectionTimeoutMillis}
+    readTimeoutMillis: ${app.retry.readTimeoutMillis}
+    maxIdleConnections: ${app.retry.maxIdleConnections}
+    keepAliveDurationMinutes: ${app.retry.keepAliveDurationMinutes}
+    maxRetryAttempt: ${app.retry.maxRetryAttempt}
+    retryInterval: ${app.retry.retryInterval}
