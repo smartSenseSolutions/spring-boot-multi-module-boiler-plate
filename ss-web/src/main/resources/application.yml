@@ -75,8 +75,6 @@ management:
 logging:
   level:
     root: INFO
-    org.cofinity.sw: DEBUG
-    com.smartsensesolutions: DEBUG
 
 messages:
   bundle:
