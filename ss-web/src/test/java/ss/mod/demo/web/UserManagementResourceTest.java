@@ -17,7 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.transaction.BeforeTransaction;
-import ss.mod.demo.SWMainApplication;
+import ss.mod.demo.MainApplication;
 import ss.mod.demo.api.constant.ContURI;
 import ss.mod.demo.api.model.request.UserRequest;
 import ss.mod.demo.api.model.response.ResponseBody;
@@ -28,7 +28,7 @@ import ss.mod.demo.util.TestHelper;
 import ss.mod.demo.util.constant.TestDataUtil;
 
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = { SWMainApplication.class })
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = { MainApplication.class })
 @ActiveProfiles("test")
 @ContextConfiguration(initializers = { ContainerContextInitializer.class })
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)

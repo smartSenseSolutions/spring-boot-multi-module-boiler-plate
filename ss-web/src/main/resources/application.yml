@@ -19,6 +19,7 @@ app:
     name: ${DB_NAME:multi-module-demo}
     username: ${DB_USER:root}
     password: ${DB_PASSWORD:root}
+    useSSL: ${USE_SSL:false}
   swagger:
     clientId: ${KEYCLOAK_CLIENT_ID:swd_public_client}
   multipart:
@@ -90,7 +91,7 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: false
   datasource:
-    url: jdbc:postgresql://${app.database.host}:${app.database.port}/${app.database.name}
+    url: jdbc:postgresql://${app.database.host}:${app.database.port}/${app.database.name}?useSSL=${app.database.useSSL}
     username: ${app.database.username}
     password: ${app.database.password}
     driverClassName: org.postgresql.Driver

@@ -43,6 +43,7 @@ public class ContainerContextInitializer implements ApplicationContextInitialize
         }
         String access_token = keycloakBuilder.build().tokenManager().getAccessToken().getToken();
         return BEARER + access_token;
+        
     }
 
     @Override

@@ -17,16 +17,16 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  * @author Sunil Kanzar
  * @since 14th feb 2024
  */
-@SpringBootApplication(scanBasePackages = {"ss.mod.demo", "com.smartsensesolutions"})
+@SpringBootApplication(scanBasePackages = { "ss.mod.demo", "com.smartsensesolutions" })
 @ConfigurationPropertiesScan
 @EnableJpaAuditing(auditorAwareRef = "auditorAware")
 @EnableAsync
 @EnableFeignClients
 @EnableScheduling
-public class SWMainApplication {
+public class MainApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SWMainApplication.class, args);
+        SpringApplication.run(MainApplication.class, args);
     }
 
 }
