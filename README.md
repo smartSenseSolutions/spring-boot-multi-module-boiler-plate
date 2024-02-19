@@ -30,9 +30,9 @@ ss-web          : It contains application Configs, Db-migration files, Exception
 ## Local Development Setup
 
 1. Run keycloak and database server
-2. Import realm file [app-test-realm.json](src%2Ftest%2Fresources%2Fapp-test-realm.json)
+2. Import realm file [app-test-realm.json](ss-web%2Fsrc%2Ftest%2Fresources%2Fapp-test-realm.json)
 3. Update your env variable in application.yaml file
-4. Run [MainApplication.java](src%2Fmain%2Fjava%2Fss%2Fmod%2Fdemo%2FMainApplication.java)
+4. Run [MainApplication.java](ss-web%2Fsrc%2Fmain%2Fjava%2Fss%2Fmod%2Fdemo%2FMainApplication.java)
    in IDE
 5. Open API doc on http://localhost:8080
 6. Click on Authorize on swagger UI and on the dialog click again on Authorize.
