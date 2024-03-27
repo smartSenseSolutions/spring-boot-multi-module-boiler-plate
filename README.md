@@ -11,7 +11,7 @@ the local development setup.
 
 # Module Information
 
-**ss-api**          : It contains utilities like constants, dtos, validators, utility classes.
+**ss-api**          : It contains utilities like constants, dtos, validators, utility classes. This will be published as a package and this can be used by other Java projects as a depedency 
 
 **ss-dao**          : It contains database entities and repositories.
 
@@ -19,7 +19,7 @@ the local development setup.
 
 **ss-service-impl** : It contains business login.
 
-**ss-web**          : It contains application Configs, Db-migration files, Exception handler, API definition.
+**ss-web**          : This is runnable spring boot application. It contains application Configs, Db-migration files, Exception handler, API definition.
 
 ## Tooling
 
