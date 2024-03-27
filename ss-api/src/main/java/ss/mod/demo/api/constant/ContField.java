@@ -3,12 +3,15 @@
  */
 package ss.mod.demo.api.constant;
 
+import lombok.experimental.UtilityClass;
+
 /**
  * Field related constant
  *
  * @author Sunil Kanzar
  * @since 14th feb 2024
  */
+@UtilityClass
 public class ContField {
     public static final String USER_ID = "userId";
     public static final String EMAIL = "email";

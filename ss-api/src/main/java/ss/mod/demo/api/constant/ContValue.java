@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ContValue {
 
-    public final static String ALLOWED_HEADERS = "*";
+    public static final String ALLOWED_HEADERS = "*";
     public static final String ANONYMOUS = "anonymous";
     public static final String FORWARD_SLASH = "/";
     public static final String SPRING_ROLE_PREFIX = "ROLE_";
