@@ -18,14 +18,6 @@ services:
       timeout: 2s
       retries: 15
     pid: "host"
-    deploy:
-      resources:
-        limits:
-          cpus: "0.50"
-          memory: "512M"
-        reservations:
-          cpus: "0.25"
-          memory: "128M"
     depends_on:
       - database
     volumes:
