@@ -4,6 +4,7 @@
 package ss.mod.demo.service.impl;
 
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -22,10 +23,11 @@ import ss.mod.demo.service.entity.UserMasterService;
  * @author Sunil Kanzar
  * @since 14th feb 2024
  */
-@AllArgsConstructor
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class UserManagementServiceImpl extends BaseService implements UserManagementService {
+
     private final UserMasterService userMasterService;
 
     @Override

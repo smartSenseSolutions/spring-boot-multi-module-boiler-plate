@@ -14,12 +14,13 @@ import org.springframework.context.MessageSource;
  * @author Sunil Kanzar
  * @since 14th feb 2024
  */
-@RequiredArgsConstructor
 public abstract class BaseService implements ServiceUtil {
 
-    private final ObjectMapper objectMapper;
+    @Autowired
+    private ObjectMapper objectMapper;
 
-    private final MessageSource messageSource;
+    @Autowired
+    private MessageSource messageSource;
 
     @Override
     public ObjectMapper getObjectMapper() {

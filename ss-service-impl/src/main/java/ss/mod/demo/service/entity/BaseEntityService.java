@@ -15,10 +15,13 @@ import org.springframework.context.MessageSource;
  * @author Sunil Kanzar
  * @since 14th feb 2024
  */
-@RequiredArgsConstructor
 public abstract class BaseEntityService<E extends BaseEntity, ID> extends com.smartsensesolutions.java.commons.base.service.BaseService<E, ID> implements ServiceUtil {
-    private final ObjectMapper objectMapper;
-    private final MessageSource messageSource;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    @Autowired
+    private MessageSource messageSource;
 
     @Override
     public ObjectMapper getObjectMapper() {

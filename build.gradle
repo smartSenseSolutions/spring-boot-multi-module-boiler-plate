@@ -51,6 +51,14 @@ subprojects {
             }
         }
     }
+
+    jacocoTestReport {
+        reports {
+            xml.required = true
+            csv.required = false
+            html.required = true
+        }
+    }
     bootJar {
         enabled = false
     }
