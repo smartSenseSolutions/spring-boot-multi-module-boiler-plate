@@ -44,6 +44,9 @@ dependencies {
     testImplementation "com.github.dasniko:testcontainers-keycloak:${keycloakTestContainerVersion}"
     testImplementation "org.testcontainers:postgresql"
     testImplementation "org.testcontainers:junit-jupiter"
+
+    developmentOnly("org.springframework.boot:spring-boot-docker-compose")
+
 }
 
 bootJar {

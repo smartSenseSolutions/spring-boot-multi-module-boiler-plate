@@ -5,6 +5,7 @@ package ss.mod.demo.service.entity;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smartsensesolutions.java.commons.base.entity.BaseEntity;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 
@@ -15,8 +16,10 @@ import org.springframework.context.MessageSource;
  * @since 14th feb 2024
  */
 public abstract class BaseEntityService<E extends BaseEntity, ID> extends com.smartsensesolutions.java.commons.base.service.BaseService<E, ID> implements ServiceUtil {
+
     @Autowired
     private ObjectMapper objectMapper;
+
     @Autowired
     private MessageSource messageSource;
 

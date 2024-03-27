@@ -30,7 +30,7 @@ public class MultipartExtensionValidator implements ConstraintValidator<Multipar
         boolean isValid = false;
         if (value != null) {
             for (String extension : extensions) {
-                if (value.getOriginalFilename().toLowerCase().endsWith(extension.toLowerCase())) {
+                if (value.getOriginalFilename() != null && value.getOriginalFilename().toLowerCase().endsWith(extension.toLowerCase())) {
                     return true;
                 }
             }

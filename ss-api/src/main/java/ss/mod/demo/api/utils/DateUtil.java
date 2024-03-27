@@ -3,6 +3,8 @@
  */
 package ss.mod.demo.api.utils;
 
+import lombok.experimental.UtilityClass;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -18,6 +20,7 @@ import java.util.Date;
  * @author Sunil Kanzar
  * @since 14th feb 2024
  */
+@UtilityClass
 public class DateUtil {
 
     private static final DateTimeFormatter ISO8601 = new DateTimeFormatterBuilder()

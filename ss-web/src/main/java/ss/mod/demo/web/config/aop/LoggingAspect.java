@@ -3,11 +3,12 @@
  */
 package ss.mod.demo.web.config.aop;
 
-import com.google.common.net.HttpHeaders;
+import io.netty.handler.codec.http.HttpHeaderNames;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.HttpHeaders;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -40,7 +41,7 @@ public class LoggingAspect {
         String targetClass = joinPoint.getTarget().getClass().getSimpleName();
         String targetMethod = joinPoint.getSignature().getName();
         Thread currentThread = Thread.currentThread();
-        String ipAddress = request.getHeader(HttpHeaders.X_FORWARDED_FOR);
+        String ipAddress = request.getHeader("X-Forwarded-For");
         if (ipAddress == null) {
             ipAddress = request.getRemoteAddr();
         }

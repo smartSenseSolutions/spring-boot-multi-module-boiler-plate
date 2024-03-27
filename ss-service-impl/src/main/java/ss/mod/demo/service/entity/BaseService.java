@@ -4,6 +4,7 @@
 package ss.mod.demo.service.entity;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 
@@ -14,8 +15,10 @@ import org.springframework.context.MessageSource;
  * @since 14th feb 2024
  */
 public abstract class BaseService implements ServiceUtil {
+
     @Autowired
     private ObjectMapper objectMapper;
+
     @Autowired
     private MessageSource messageSource;
 
