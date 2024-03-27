@@ -24,8 +24,8 @@ import static ss.mod.demo.util.constant.KeycloakTestConstant.VALID_USER_NAME;
 public class ContainerContextInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
 
-    private static final PostgreSQLContainer postgreSQLContainer = new PostgreSQLContainer("postgres:15.2");
-    private static final KeycloakContainer keycloak = new KeycloakContainer("jboss/keycloak:16.1.1")
+    private static final PostgreSQLContainer postgreSQLContainer = new PostgreSQLContainer("postgres:16.2");
+    private static final KeycloakContainer keycloak = new KeycloakContainer("quay.io/keycloak/keycloak:24.0.2")
             .withRealmImportFile(REAL_FILE_PATH)
             .withAdminPassword(KEYCLOAK_ADMIN_USERNAME)
             .withAdminPassword(PASSWORD);
@@ -43,7 +43,7 @@ public class ContainerContextInitializer implements ApplicationContextInitialize
         }
         String access_token = keycloakBuilder.build().tokenManager().getAccessToken().getToken();
         return BEARER + access_token;
-        
+
     }
 
     @Override

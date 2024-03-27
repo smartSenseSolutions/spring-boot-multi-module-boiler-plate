@@ -8,14 +8,14 @@ app:
     realm: ${KEYCLOAK_REALM_NAME:SWD}
     clientId: ${KEYCLOAK_CLIENT_ID:pb_backend}
     roleClientId: ${KEYCLOAK_ROLE_CLIENT_ID:pv_backend}
-    auth-server-url: ${KEYCLOAK_AUTH_URL:http://localhost:9090/auth}
+    auth-server-url: ${KEYCLOAK_AUTH_URL:http://localhost:28080}
     auth-url: ${app.security.auth-server-url}/realms/${app.security.realm}/protocol/openid-connect/auth
     token-url: ${app.security.auth-server-url}/realms/${app.security.realm}/protocol/openid-connect/token
     refresh-token-url: ${KEYCLOAK_TOKEN_URL}
     corsOrigins: "*"
   database:
     host: ${DB_HOST:localhost}
-    port: ${DB_PORT:5432}
+    port: ${DB_PORT:15432}
     name: ${DB_NAME:multi-module-demo}
     username: ${DB_USER:root}
     password: ${DB_PASSWORD:root}

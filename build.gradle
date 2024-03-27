@@ -36,8 +36,21 @@ subprojects {
 
     tasks.named('test') {
         useJUnitPlatform()
+        finalizedBy jacocoTestReport
+        testLogging {
+            events("passed", "skipped", "failed")
+        }
     }
 
+    jacocoTestCoverageVerification {
+        violationRules {
+            rule {
+                limit {
+                    minimum = 0.80
+                }
+            }
+        }
+    }
     bootJar {
         enabled = false
     }

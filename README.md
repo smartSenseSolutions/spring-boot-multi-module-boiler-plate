@@ -11,7 +11,7 @@ the local development setup.
 
 ## Module Information
 
-**ss-api**          : It contains utilities like constants, dtos, validators, utility classes. This will be published as a package and this can be used by other Java projects as a depedency 
+**ss-api**          : It contains utilities like constants, dtos, validators, utility classes. This will be published as a package and this can be used by other Java projects as a depedency
 
 **ss-dao**          : It contains database entities and repositories.
 
@@ -25,7 +25,7 @@ the local development setup.
 
 | Area     | Tool     | Download Link                                   | Comment                                                                                           |
 |----------|----------|-------------------------------------------------|---------------------------------------------------------------------------------------------------|
-| IDE      | IntelliJ | https://www.jetbrains.com/idea/download/        | Additionally the [envfile plugin](https://plugins.jetbrains.com/plugin/7861-envfile) is suggested |   
+| IDE      | IntelliJ | https://www.jetbrains.com/idea/download/        | Additionally the [envfile plugin](https://plugins.jetbrains.com/plugin/7861-envfile) is suggested |
 | Build    | Gradle   | https://gradle.org/install/                     |
 | Runtime  | Docker   | https://www.docker.com/products/docker-desktop/ |                                                                                                   |
 | Database | DBeaver  | https://dbeaver.io/                             |
@@ -33,27 +33,23 @@ the local development setup.
 
 ## Local Development Setup
 
-1. Run keycloak and database server
-2. Import realm file [app-test-realm.json](ss-web%2Fsrc%2Ftest%2Fresources%2Fapp-test-realm.json)
-3. Update your env variable in application.yaml file
-4. Run [MainApplication.java](ss-web%2Fsrc%2Fmain%2Fjava%2Fss%2Fmod%2Fdemo%2FMainApplication.java)
-   in IDE
-5. Open API doc on http://localhost:8080
-6. Click on Authorize on swagger UI and on the dialog click again on Authorize.
-7. Login with username=valid-user and password=password
+1. Run [MainApplication.java](ss-web%2Fsrc%2Fmain%2Fjava%2Fss%2Fmod%2Fdemo%2FMainApplication.java) in IDE. It will up database and keycloak using docker compose(ref: [Spring boot support for docker compose](https://spring.io/blog/2023/06/21/docker-compose-support-in-spring-boot-3-1))
+2. Open API doc on http://localhost:8080/api/app/ui/swagger-ui/index.html
+3. Click on Authorize on swagger UI and on the dialog click again on Authorize.
+4. Login with username=valid-user and password=password
 
 ## Build application locally
 
 Build with test cases
 
 ```
-./gradlew build 
+./gradlew build
 ```
 
 Build without test cases
 
 ```
-./gradlew build -i -x test  
+./gradlew build -i -x test
 ```
 
 ## Test Coverage
@@ -66,7 +62,7 @@ The generated HTML report can be found under `jacoco-report/html/`
 To generate the report run the command
 
 ```
-./gradlew jacocoTestReport
+./gradlew testCodeCoverageReport
 ```
 
 To check the coverage run the command
@@ -106,8 +102,8 @@ This process ensures that any issues with the database schema are resolved by re
 
 | name                           | description                                     | default value              |
 |--------------------------------|-------------------------------------------------|----------------------------|
-| APP_PORT                       | port number of application                      | 8080                       | 
-| SECURITY_ENABLE                | To keep spring security enable/disable          | true                       | 
+| APP_PORT                       | port number of application                      | 8080                       |
+| SECURITY_ENABLE                | To keep spring security enable/disable          | true                       |
 | KEYCLOAK_REALM_NAME            | Realm name of keycloak                          | SWD                        |
 | KEYCLOAK_CLIENT_ID             | Keycloak public client id                       | pb_backend                 |
 | KEYCLOAK_ROLE_CLIENT_ID        | Keycloak private client id                      | pb_backend                 |
