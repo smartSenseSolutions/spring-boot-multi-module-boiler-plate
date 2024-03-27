@@ -1,15 +1,15 @@
 # Seed Multi module demo
 
-# Spring boot multi module boiler plate <a id="introduction"></a>
+## Spring boot multi module boiler plate <a id="introduction"></a>
 
 This repository contains boiler-plate codebase using Java, Spring boot as core technology.
 
-# Developer Documentation
+## Developer Documentation
 
 To run application locally, this section describes the tooling as well as
 the local development setup.
 
-# Module Information
+## Module Information
 
 **ss-api**          : It contains utilities like constants, dtos, validators, utility classes. This will be published as a package and this can be used by other Java projects as a depedency 
 
