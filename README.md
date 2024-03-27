@@ -11,11 +11,15 @@ the local development setup.
 
 # Module Information
 
-ss-api          : It contains utilities like constants, dtos, validators, utility classes.
-ss-dao          : It contains database entities and repositories.
-ss-service      : It contains abstraction of business logic.
-ss-service-impl : It contains business login.
-ss-web          : It contains application Configs, Db-migration files, Exception handler, API definition.
+**ss-api**          : It contains utilities like constants, dtos, validators, utility classes.
+
+**ss-dao**          : It contains database entities and repositories.
+
+**ss-service**      : It contains abstraction of business logic.
+
+**ss-service-impl** : It contains business login.
+
+**ss-web**          : It contains application Configs, Db-migration files, Exception handler, API definition.
 
 ## Tooling
 
