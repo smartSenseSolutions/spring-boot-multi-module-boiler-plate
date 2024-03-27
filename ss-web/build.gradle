@@ -60,15 +60,13 @@ dependencyManagement {
     }
 }
 
-jacocoTestReport {
-    dependsOn test
-}
 
 jacoco {
     toolVersion = "${jacocoVersion}"
 }
 
 jacocoTestReport {
+    dependsOn test
     reports {
         xml.required = false
         csv.required = false

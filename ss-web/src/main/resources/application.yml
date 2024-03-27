@@ -82,6 +82,9 @@ messages:
     path: classpath:i18n/messages
 
 spring:
+  threads:
+    virtual:
+      enabled: true
   jpa:
     hibernate:
       ddl-auto: update

@@ -12,11 +12,8 @@ dependencies {
     implementation "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}"
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
     implementation 'org.springframework.security:spring-security-oauth2-resource-server'
-    implementation 'com.neovisionaries:nv-i18n:1.29'
-    implementation 'org.apache.commons:commons-text:1.11.0'
     implementation 'jakarta.servlet:jakarta.servlet-api'
-    implementation 'org.apache.poi:poi:5.2.5'
-    implementation 'org.apache.poi:poi-ooxml:5.2.5'
+
 }
 
 jar {
