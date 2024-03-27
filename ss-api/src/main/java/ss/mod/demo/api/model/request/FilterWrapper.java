@@ -11,7 +11,7 @@ import com.smartsensesolutions.java.commons.sort.Sort;
 import com.smartsensesolutions.java.commons.sort.SortType;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.util.CollectionUtils;
 import ss.mod.demo.api.model.BaseModel;
 
 import java.io.Serial;
