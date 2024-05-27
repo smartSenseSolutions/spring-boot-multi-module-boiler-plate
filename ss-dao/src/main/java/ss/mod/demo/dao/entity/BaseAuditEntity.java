@@ -3,7 +3,7 @@
  */
 package ss.mod.demo.dao.entity;
 
-import com.smartsensesolutions.java.commons.base.entity.BaseEntity;
+import com.smartsensesolutions.commons.dao.base.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;

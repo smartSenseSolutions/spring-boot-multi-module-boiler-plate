@@ -6,7 +6,7 @@ package ss.mod.demo.service.entity;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
-import com.smartsensesolutions.java.commons.FilterRequest;
+import com.smartsensesolutions.commons.dao.filter.FilterRequest;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;

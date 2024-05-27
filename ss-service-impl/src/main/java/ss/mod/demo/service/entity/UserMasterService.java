@@ -3,9 +3,8 @@
  */
 package ss.mod.demo.service.entity;
 
-import com.smartsensesolutions.java.commons.base.repository.BaseRepository;
-import com.smartsensesolutions.java.commons.specification.SpecificationUtil;
-import lombok.AllArgsConstructor;
+import com.smartsensesolutions.commons.dao.base.BaseRepository;
+import com.smartsensesolutions.commons.dao.specification.SpecificationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ss.mod.demo.api.constant.ContMessage;

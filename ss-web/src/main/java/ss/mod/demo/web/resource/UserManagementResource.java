@@ -3,6 +3,7 @@
  */
 package ss.mod.demo.web.resource;
 
+import com.smartsensesolutions.commons.dao.filter.FilterRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import ss.mod.demo.api.constant.ContField;
 import ss.mod.demo.api.constant.ContMessage;
 import ss.mod.demo.api.constant.ContURI;
-import ss.mod.demo.api.model.request.FilterWrapper;
 import ss.mod.demo.api.model.request.UserRequest;
 import ss.mod.demo.api.model.response.PageResponse;
 import ss.mod.demo.api.model.response.ResponseBody;
@@ -42,7 +42,7 @@ public class UserManagementResource extends BaseResource {
     }
 
     @Operation(summary = "Get User")
-    @GetMapping(value = ContURI.USER_WITH_ID, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = ContURI.USER_WITH_ID, produces = MediaType.APPLICATION_JSON_VALUE)
     public UserResponse getUser(@PathVariable(ContField.USER_ID) String userId) {
         return userManagementService.getUserById(userId);
     }
@@ -50,7 +50,7 @@ public class UserManagementResource extends BaseResource {
     @Operation(summary = "User Filter")
     @PostMapping(value = ContURI.USER_FILTER, produces = MediaType.APPLICATION_JSON_VALUE, consumes =
             MediaType.APPLICATION_JSON_VALUE)
-    public PageResponse<UserResponse> userFilter(@Valid @RequestBody FilterWrapper filterWrapper) {
-        return userManagementService.userFilter(filterWrapper);
+    public PageResponse<UserResponse> userFilter(@Valid @RequestBody FilterRequest filterRequest) {
+        return userManagementService.userFilter(filterRequest);
     }
 }
