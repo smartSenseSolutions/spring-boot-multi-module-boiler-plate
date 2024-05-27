@@ -3,12 +3,11 @@
  */
 package ss.mod.demo.service.impl;
 
-import lombok.AllArgsConstructor;
+import com.smartsensesolutions.commons.dao.filter.FilterRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-import ss.mod.demo.api.model.request.FilterWrapper;
 import ss.mod.demo.api.model.request.UserRequest;
 import ss.mod.demo.api.model.response.PageResponse;
 import ss.mod.demo.api.model.response.UserResponse;
@@ -41,8 +40,8 @@ public class UserManagementServiceImpl extends BaseService implements UserManage
     }
 
     @Override
-    public PageResponse<UserResponse> userFilter(FilterWrapper filterWrapper) {
-        Page<UserMaster> filter = userMasterService.filter(filterWrapper);
-        return toPageResponse(filter, filterWrapper, UserResponse.class);
+    public PageResponse<UserResponse> userFilter(FilterRequest filterRequest) {
+        Page<UserMaster> filter = userMasterService.filter(filterRequest);
+        return toPageResponse(filter, filterRequest, UserResponse.class);
     }
 }

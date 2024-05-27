@@ -13,7 +13,7 @@ services:
 
   keycloak:
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://http://0.0.0.0:28080/auth/"]
+      test: ["CMD", "curl", "-f", "http://0.0.0.0:28080/auth/"]
       interval: 5s
       timeout: 2s
       retries: 15

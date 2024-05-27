@@ -3,7 +3,7 @@
  */
 package ss.mod.demo.service;
 
-import ss.mod.demo.api.model.request.FilterWrapper;
+import com.smartsensesolutions.commons.dao.filter.FilterRequest;
 import ss.mod.demo.api.model.request.UserRequest;
 import ss.mod.demo.api.model.response.PageResponse;
 import ss.mod.demo.api.model.response.UserResponse;
@@ -19,5 +19,5 @@ public interface UserManagementService {
 
     UserResponse createUser(UserRequest userRequest);
 
-    PageResponse<UserResponse> userFilter(FilterWrapper filterWrapper);
+    PageResponse<UserResponse> userFilter(FilterRequest filterRequest);
 }

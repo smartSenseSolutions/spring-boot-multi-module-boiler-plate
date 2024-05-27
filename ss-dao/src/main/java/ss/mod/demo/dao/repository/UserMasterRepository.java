@@ -3,7 +3,7 @@
  */
 package ss.mod.demo.dao.repository;
 
-import com.smartsensesolutions.java.commons.base.repository.BaseRepository;
+import com.smartsensesolutions.commons.dao.base.BaseRepository;
 import org.springframework.stereotype.Repository;
 import ss.mod.demo.dao.entity.UserMaster;
 
