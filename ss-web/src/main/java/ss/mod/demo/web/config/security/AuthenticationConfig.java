@@ -6,9 +6,12 @@ package ss.mod.demo.web.config.security;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationEventPublisher;
+import org.springframework.security.authentication.DefaultAuthenticationEventPublisher;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -97,5 +100,18 @@ public class AuthenticationConfig {
         return source;
     }
 
+    /**
+     * This bean is used to publish authentication events, such as successful or failed login attempts.
+     *
+     * @param applicationEventPublisher - This instance is used to publish events to the application context.
+     * @return An instance of DefaultAuthenticationEventPublisher, which implements the AuthenticationEventPublisher interface.
+     * @see AuthenticationEventPublisher
+     * @see DefaultAuthenticationEventPublisher
+     * @see ApplicationEventPublisher
+     */
+    @Bean
+    public AuthenticationEventPublisher authenticationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
+        return new DefaultAuthenticationEventPublisher(applicationEventPublisher);
+    }
 }
 
